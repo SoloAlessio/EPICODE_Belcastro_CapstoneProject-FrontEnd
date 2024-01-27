@@ -1,5 +1,6 @@
 import './globals.css';
 import { poppins } from './ui/fonts';
+import Providers from './providers';
 
 export const metadata = {
   title: 'Create Next App',
@@ -9,7 +10,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
-      <body className={poppins.className}>{children}</body>
+      <body
+        className={`default bg-background text-foreground ${poppins.className}`}
+      >
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
