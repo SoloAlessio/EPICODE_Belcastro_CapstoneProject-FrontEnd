@@ -16,6 +16,13 @@ import {
     Image,
 } from '@nextui-org/react'
 
+import {
+    FaGear,
+    FaTrophy,
+    FaCircleInfo,
+    FaArrowRightFromBracket,
+} from 'react-icons/fa6'
+
 import { SearchIcon } from '../SearchIcon.jsx'
 import { useRouter } from 'next/navigation'
 import ThemeSwitcher from './ThemeSwitcher.jsx'
@@ -39,18 +46,18 @@ export default function NavBarComponent() {
                 </NavbarBrand>
                 <NavbarContent className='hidden gap-3 sm:flex'>
                     <NavbarItem>
-                        <Link color='foreground' href='#'>
-                            Features
+                        <Link color='foreground' href='#' aria-current='page'>
+                            MyTeam
                         </Link>
                     </NavbarItem>
                     <NavbarItem isActive>
-                        <Link href='#' aria-current='page' color='foreground'>
-                            Customers
+                        <Link href='#' color='foreground'>
+                            Leagues
                         </Link>
                     </NavbarItem>
                     <NavbarItem>
                         <Link color='foreground' href='#'>
-                            Integrations
+                            Clubs
                         </Link>
                     </NavbarItem>
                 </NavbarContent>
@@ -71,37 +78,67 @@ export default function NavBarComponent() {
                     type='search'
                 />
                 <ThemeSwitcher />
-                <Dropdown placement='bottom-end'>
+                <Dropdown placement='bottom-end' backdrop='blur'>
                     <DropdownTrigger>
                         <Avatar
                             isBordered
                             as='button'
                             className='transition-transform'
                             color='secondary'
-                            name='Jason Hughes'
+                            name='Belcastro Alessio'
                             size='sm'
                             src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
                         />
                     </DropdownTrigger>
                     <DropdownMenu aria-label='Profile Actions' variant='flat'>
-                        <DropdownItem key='profile' className='h-14 gap-2'>
-                            <p className='font-semibold'>Signed in as</p>
-                            <p className='font-semibold'>zoey@example.com</p>
+                        <DropdownItem
+                            key='profile'
+                            className='mb-4 h-14 gap-2'
+                            startContent={
+                                <Avatar
+                                    isBordered
+                                    as='button'
+                                    className='mr-2 transition-transform'
+                                    color='secondary'
+                                    name='Belcastro Alessio'
+                                    size='sm'
+                                    src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
+                                />
+                            }
+                        >
+                            <p className='font-semibold'>Belcastro Alessio</p>
+                            <p className='text-sm text-default-500'>
+                                Welcome Back!
+                            </p>
                         </DropdownItem>
-                        <DropdownItem key='settings'>My Settings</DropdownItem>
-                        <DropdownItem key='team_settings'>
-                            Team Settings
+                        <DropdownItem
+                            description='Manage your account settings'
+                            key='settings'
+                            startContent={<FaGear className='mr-2' />}
+                        >
+                            Settings
                         </DropdownItem>
-                        <DropdownItem key='analytics'>Analytics</DropdownItem>
-                        <DropdownItem key='system'>System</DropdownItem>
-                        <DropdownItem key='configurations'>
-                            Configurations
+                        <DropdownItem
+                            description='How your team is doing?'
+                            key='analytics'
+                            startContent={<FaTrophy className='mr-2' />}
+                        >
+                            MyTeam
                         </DropdownItem>
-                        <DropdownItem key='help_and_feedback'>
+                        <DropdownItem
+                            description='Help us improve the app'
+                            key='help_and_feedback'
+                            startContent={<FaCircleInfo className='mr-2' />}
+                        >
                             Help & Feedback
                         </DropdownItem>
                         <DropdownItem
+                            description='Log out from your account'
+                            startContent={
+                                <FaArrowRightFromBracket className='mr-2' />
+                            }
                             key='logout'
+                            className='mt-4'
                             color='danger'
                             onClick={() => handleLogout()}
                         >

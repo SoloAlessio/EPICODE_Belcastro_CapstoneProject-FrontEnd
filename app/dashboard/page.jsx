@@ -1,20 +1,30 @@
 'use client'
 
 import React from 'react'
-import { Divider, Card, CardBody } from '@nextui-org/react'
+import { Card, CardBody, ScrollShadow } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import Carousel from '../ui/components/Carousel'
+import Fixture from '../ui/components/Fixture'
+import SquadDetail from '../ui/components/SquadDetail'
+import Chart from 'react-apexcharts'
+import PlayerCard from '../ui/components/PlayerCard'
 
 export default function Page() {
     const [userData, setUserData] = useState('')
     const [liveMatches, setLiveMatches] = useState('')
     const [fixtures, setFixtures] = useState('')
+    const [favTeam, setFavTeam] = useState('')
 
-    const formatDate = (date) => {
-        let formattedDate = date.toString().slice(0, 16)
-        formattedDate = formattedDate.replace('T', ' - ')
-
-        return formattedDate
+    const area = {
+        series: [
+            {
+                name: 'label-1',
+                data: [44, 55, 13, 43, 22],
+            },
+        ],
+        options: {
+            labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+        },
     }
 
     useEffect(() => {
@@ -83,6 +93,25 @@ export default function Page() {
             }
         }
 
+        const getFavTeam = async () => {
+            let res = await fetch(
+                `https://v3.football.api-sports.io/teams?id=505&league=135&season=2023`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'x-apisports-key': 'cd11382c690043fa0c83658c45af681f',
+                    },
+                }
+            )
+            if (res.ok) {
+                let data = await res.json()
+                setFavTeam(data.response[0])
+            } else {
+                throw new Error('Failed to fetch!')
+            }
+        }
+
+        getFavTeam()
         getUser()
         getLiveMatches()
         getFixtures()
@@ -94,82 +123,94 @@ export default function Page() {
             {liveMatches && <Carousel liveMatches={liveMatches} />}
 
             {/* Welcome text */}
-            <h1 className='mb-6 text-center text-xl'>
-                Welcome Back <span className='font-bold'>{userData.name}</span>{' '}
-                👋
-            </h1>
+            {userData && (
+                <h1 className='mb-6 text-center text-xl'>
+                    Welcome Back{' '}
+                    <span className='font-bold'>{userData.name}</span> 👋
+                </h1>
+            )}
 
             <div className='mb-6 grid grid-cols-12 gap-4'>
-                <Card className='col-span-12 rounded-xl bg-content1 p-4 sm:col-span-6'>
-                    <CardBody>
-                        <h1>col-6</h1>
+                {/* Squad Detail */}
+                <Card className='col-span-12 sm:col-span-6'>
+                    <CardBody className='flex p-4'>
+                        {favTeam && (
+                            <SquadDetail
+                                team={favTeam.team}
+                                venue={favTeam.venue}
+                            />
+                        )}
                     </CardBody>
                 </Card>
+
+                {/* Squad Fixtures */}
                 <Card className='col-span-12 sm:col-span-6'>
                     <CardBody className='p-4'>
                         {fixtures &&
                             fixtures.map((el) => (
-                                <div
-                                    className='grid cursor-pointer grid-cols-12 rounded-lg px-4 py-2 transition-all hover:bg-default-100'
+                                <Fixture
                                     key={el.fixture.id}
-                                >
-                                    {/* Squadra di casa */}
-                                    <div className='col-span-4 flex items-center'>
-                                        <span className='font-semibold'>
-                                            {el.teams.home.name}
-                                        </span>
-                                    </div>
-
-                                    {/* Dettagli partita */}
-                                    <div className='col-span-4 flex items-center justify-around gap-4'>
-                                        {/* Logo squadra di casa */}
-                                        <img
-                                            src={el.teams.home.logo}
-                                            alt={el.teams.home.name}
-                                            loading='lazy'
-                                            className='h-6'
-                                        />
-
-                                        {/* Risultato */}
-                                        <div className='flex flex-col text-center'>
-                                            <div className='flex items-center justify-center space-x-3'>
-                                                <span className='font-medium'>
-                                                    {el.goals.home}
-                                                </span>
-                                                <span className='text-default-500'>
-                                                    {el.fixture.status.short}
-                                                </span>
-                                                <span className='font-medium'>
-                                                    {el.goals.away}
-                                                </span>
-                                            </div>
-                                            {/* Data */}
-                                            <div>
-                                                <span className='text-center text-xs font-light text-default-500'>
-                                                    {formatDate(
-                                                        el.fixture.date
-                                                    )}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        {/* Logo squadra ospite */}
-                                        <img
-                                            src={el.teams.away.logo}
-                                            alt={el.teams.away.name}
-                                            loading='lazy'
-                                            className='h-6'
-                                        />
-                                    </div>
-
-                                    {/* Squadra ospite */}
-                                    <div className='col-span-4 flex items-center justify-end'>
-                                        <span className='font-semibold'>
-                                            {el.teams.away.name}
-                                        </span>
-                                    </div>
-                                </div>
+                                    fixture={el.fixture}
+                                    teams={el.teams}
+                                    goals={el.goals}
+                                />
                             ))}
+                    </CardBody>
+                </Card>
+
+                {/* Squad Best Players */}
+                <Card className='col-span-12 sm:col-span-4'>
+                    <ScrollShadow>
+                        <CardBody className='p-4'>
+                            <p class='mb-4 font-bold'>Best Players</p>
+                            <p class='mb-4 font-semibold'>Goals</p>
+                            <div class='mb-4 flex flex-col gap-4'>
+                                <PlayerCard
+                                    player={'Lautaro Martinez'}
+                                    role={'Attaccante'}
+                                    number={'9'}
+                                />
+                                <PlayerCard
+                                    player={'Lautaro Martinez'}
+                                    role={'Attaccante'}
+                                    number={'9'}
+                                />
+                                <PlayerCard
+                                    player={'Lautaro Martinez'}
+                                    role={'Attaccante'}
+                                    number={'9'}
+                                />
+                            </div>
+                            <p class='mb-4 font-semibold'>Assists</p>
+                            <div class='mb-4 flex flex-col gap-4'>
+                                <PlayerCard
+                                    player={'Lautaro Martinez'}
+                                    role={'Attaccante'}
+                                    number={'9'}
+                                />
+                                <PlayerCard
+                                    player={'Lautaro Martinez'}
+                                    role={'Attaccante'}
+                                    number={'9'}
+                                />
+                                <PlayerCard
+                                    player={'Lautaro Martinez'}
+                                    role={'Attaccante'}
+                                    number={'9'}
+                                />
+                            </div>
+                        </CardBody>
+                    </ScrollShadow>
+                </Card>
+
+                {/* Squad Form */}
+                <Card className='col-span-12 sm:col-span-8'>
+                    <CardBody>
+                        <Chart
+                            options={area.options}
+                            series={area.series}
+                            type='area'
+                        />
                     </CardBody>
                 </Card>
             </div>
