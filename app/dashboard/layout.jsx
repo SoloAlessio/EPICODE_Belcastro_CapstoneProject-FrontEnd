@@ -6,9 +6,9 @@ import { UserContext } from '../context/UserContext.jsx'
 
 export default function Layout({ children }) {
     const [userData, setUserData] = useState()
-    const token = localStorage.getItem('token')
 
     useEffect(() => {
+        const token = localStorage.getItem('token')
         const getUser = async () => {
             try {
                 const res = await fetch(`${process.env.ENDPOINT}/users/me`, {
