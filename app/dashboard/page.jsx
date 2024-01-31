@@ -9,9 +9,7 @@ import PlayerCard from '../ui/components/PlayerCard'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { UserContext } from '../context/UserContext'
-
-import dynamic from 'next/dynamic'
-const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
+import Chart from 'react-apexcharts'
 
 export default function Page() {
     const router = useRouter()
@@ -283,11 +281,13 @@ export default function Page() {
                 {/* Squad Form */}
                 <Card className='col-span-12 hidden sm:col-span-8 lg:flex'>
                     <CardBody>
-                        <ApexChart
-                            options={area.options}
-                            series={area.series}
-                            type='area'
-                        />
+                        {typeof window !== 'undefined' && (
+                            <Chart
+                                options={area.options}
+                                series={area.series}
+                                type='area'
+                            />
+                        )}
                     </CardBody>
                 </Card>
             </div>

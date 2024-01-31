@@ -32,7 +32,7 @@ export default function Layout({ children }) {
             }
         }
         getUser()
-    }, [token])
+    }, [])
 
     return (
         <UserContext.Provider value={userData}>
