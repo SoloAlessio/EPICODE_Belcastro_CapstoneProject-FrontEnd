@@ -11,7 +11,7 @@ import {
 } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 
-export default function page({ params }) {
+export default function Page({ params }) {
     const homeValue = 57
     const awayValue = 43
     const homeShots = 9

@@ -9,7 +9,7 @@ import {
     Button,
 } from '@nextui-org/react'
 
-export default function page() {
+export default function Page() {
     return (
         <div className='container md:mx-auto'>
             <div className='grid grid-cols-12 gap-4'>

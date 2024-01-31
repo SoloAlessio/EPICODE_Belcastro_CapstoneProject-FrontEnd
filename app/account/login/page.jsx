@@ -9,7 +9,7 @@ import { EyeSlashFilledIcon } from '../../ui/EyeSlashFilledIcon'
 import { FaGoogle } from 'react-icons/fa6'
 import { FaAngleLeft } from 'react-icons/fa6'
 
-export default function page() {
+export default function Page() {
     const router = useRouter()
 
     const [loading, setLoading] = useState(false)

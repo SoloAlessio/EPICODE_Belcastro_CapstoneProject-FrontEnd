@@ -9,7 +9,7 @@ import { EyeSlashFilledIcon } from '../../ui/EyeSlashFilledIcon'
 import { FaAngleLeft } from 'react-icons/fa6'
 import Link from 'next/link'
 
-function page() {
+export default function Page() {
     const router = useRouter()
 
     const [loading, setLoading] = useState(false)
@@ -155,5 +155,3 @@ function page() {
         </div>
     )
 }
-
-export default page
