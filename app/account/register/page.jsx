@@ -3,11 +3,11 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import Link from 'next/link'
 import { Input, Button } from '@nextui-org/react'
 import { EyeFilledIcon } from '../../ui/EyeFilledIcon'
 import { EyeSlashFilledIcon } from '../../ui/EyeSlashFilledIcon'
 import { FaAngleLeft } from 'react-icons/fa6'
+import Link from 'next/link'
 
 function page() {
     const router = useRouter()
@@ -47,9 +47,7 @@ function page() {
             }
         )
         if (res.ok) {
-            const data = await res.json()
-            localStorage.setItem('token', data.token)
-            router.push('/dashboard')
+            router.push('/account/login')
             setLoading(false)
         } else {
             setLoading(false)

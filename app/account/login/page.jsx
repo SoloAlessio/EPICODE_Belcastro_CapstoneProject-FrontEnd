@@ -48,6 +48,7 @@ export default function page() {
         )
         if (res.ok) {
             const data = await res.json()
+            console.log(data)
             localStorage.setItem('token', data.token) // set userId in local storage
             router.push('/dashboard') // redirect to dashboard
             setLoading(false) // set loading to false
@@ -73,6 +74,7 @@ export default function page() {
                         <FaAngleLeft />
                         <h5>Back to Home</h5>
                     </Link>
+
                     <form
                         onSubmit={(e) => handleLogin(e)}
                         className='mx-4 mb-4 rounded-2xl bg-default-300 p-6 shadow-xl dark:bg-default-50'
@@ -144,6 +146,7 @@ export default function page() {
                             Don't have an account? Sign up
                         </a>
                     </form>
+
                     <p className='text-center text-xs text-gray-500'>
                         &copy;2023 Belcastro Alessio. All rights reserved.
                     </p>

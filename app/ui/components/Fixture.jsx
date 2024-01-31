@@ -9,7 +9,7 @@ export default function Fixture({ fixture, teams, goals }) {
     }
 
     return (
-        <div className='grid cursor-pointer grid-cols-12 rounded-lg px-0 py-2 transition-all hover:bg-default-100 lg:px-4'>
+        <div className='grid cursor-pointer grid-cols-12 rounded-lg px-0 py-2 transition-all lg:px-4'>
             {/* Squadra di casa */}
             <div className='col-span-3 flex items-center pr-3 lg:pr-0'>
                 <span className='truncate font-semibold'>
