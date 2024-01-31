@@ -9,7 +9,9 @@ import PlayerCard from '../ui/components/PlayerCard'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { UserContext } from '../context/UserContext'
-import Chart from 'react-apexcharts'
+
+import dynamic from 'next/dynamic'
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 export default function Page() {
     const router = useRouter()
