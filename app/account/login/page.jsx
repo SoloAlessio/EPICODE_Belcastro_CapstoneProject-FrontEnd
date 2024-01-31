@@ -1,8 +1,7 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import Link from 'next/link'
 import { Input, Button } from '@nextui-org/react'
 import { EyeFilledIcon } from '../../ui/EyeFilledIcon'
@@ -17,7 +16,7 @@ export default function page() {
 
     const [email, setEmail] = useState('belcastro@gmail.com')
     const [password, setPassword] = useState('Fustacchione410')
-    const [isVisible, setIsVisible] = React.useState(false)
+    const [isVisible, setIsVisible] = useState(false)
 
     // user object
     const User = {
