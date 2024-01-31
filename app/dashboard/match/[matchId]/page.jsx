@@ -64,6 +64,7 @@ export default function Page({ params }) {
                                 <Image
                                     width={150}
                                     height={150}
+                                    alt={matchData?.teams.home.name}
                                     src={matchData?.teams.home.logo}
                                     className='rounded-full'
                                 />
@@ -76,6 +77,7 @@ export default function Page({ params }) {
                                 {/* League Info */}
                                 <div className='hidden items-center justify-center gap-4 lg:flex'>
                                     <Image
+                                        alt={matchData?.league.name}
                                         src={matchData?.league.logo}
                                         width={24}
                                     />
@@ -118,6 +120,7 @@ export default function Page({ params }) {
                                 <Image
                                     width={150}
                                     height={150}
+                                    alt={matchData?.teams.away.name}
                                     src={matchData?.teams.away.logo}
                                     className='rounded-full'
                                 />
@@ -136,10 +139,14 @@ export default function Page({ params }) {
                         <ScrollShadow className='h-[275px]'>
                             <div className='flex flex-col gap-4'>
                                 {matchData?.events.map((event) => (
-                                    <div className='flex items-center justify-between gap-4'>
+                                    <div
+                                        className='flex items-center justify-between gap-4'
+                                        key={event.time.elapsed}
+                                    >
                                         <div className='flex gap-4'>
                                             <Image
                                                 width={40}
+                                                alt={event.team.name}
                                                 src={event.team.logo}
                                             />
                                             <Divider orientation='vertical' />
@@ -154,7 +161,7 @@ export default function Page({ params }) {
                                             </div>
                                         </div>
                                         <span className='mr-4 font-semibold text-default-400'>
-                                            {event.time.elapsed}'
+                                            {event.time.elapsed}&rsquo;
                                         </span>
                                     </div>
                                 ))}

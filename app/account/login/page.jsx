@@ -35,16 +35,13 @@ export default function Page() {
         error.innerHTML = ''
 
         // fetch request
-        const res = await fetch(
-            `https://epicode-belcastro-capstone-project.onrender.com/users/login`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(User),
-            }
-        )
+        const res = await fetch(`${process.env.ENDPOINT}/users/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(User),
+        })
         if (res.ok) {
             const data = await res.json()
             console.log(data)
@@ -142,7 +139,7 @@ export default function Page() {
                             className='mt-4 inline-block w-full text-center align-baseline text-tiny font-medium transition-all dark:hover:text-white'
                             href='/account/register'
                         >
-                            Don't have an account? Sign up
+                            Don&rsquo;t have an account? Sign up
                         </a>
                     </form>
 

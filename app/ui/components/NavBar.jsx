@@ -39,7 +39,12 @@ export default function NavBarComponent() {
             <NavbarContent justify='start'>
                 <NavbarBrand className='mr-4'>
                     <Link href='/dashboard' color='foreground'>
-                        <Image src='/images/logo.svg' width={40} height={40} />
+                        <Image
+                            src='/images/logo.svg'
+                            alt='navbar logo'
+                            width={40}
+                            height={40}
+                        />
                         <p className='ml-2 hidden font-light text-inherit sm:block'>
                             Soccer<strong className='font-bold'>Stats</strong>
                         </p>

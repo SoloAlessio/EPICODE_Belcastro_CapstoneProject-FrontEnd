@@ -1,4 +1,5 @@
 import React from 'react'
+import { Image } from '@nextui-org/react'
 
 export default function Fixture({ fixture, teams, goals }) {
     const formatDate = (date) => {
@@ -20,7 +21,7 @@ export default function Fixture({ fixture, teams, goals }) {
             {/* Dettagli partita */}
             <div className='col-span-6 flex items-center justify-around gap-4'>
                 {/* Logo squadra di casa */}
-                <img
+                <Image
                     src={teams.home.logo}
                     alt={teams.home.name}
                     loading='lazy'
@@ -45,7 +46,7 @@ export default function Fixture({ fixture, teams, goals }) {
                 </div>
 
                 {/* Logo squadra ospite */}
-                <img
+                <Image
                     src={teams.away.logo}
                     alt={teams.away.name}
                     loading='lazy'

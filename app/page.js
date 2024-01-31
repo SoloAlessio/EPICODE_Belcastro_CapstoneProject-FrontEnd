@@ -43,6 +43,7 @@ export default function Home() {
                     <div className='relative'>
                         <Image
                             src='/images/soccer.jpg'
+                            alt='hero soccer image'
                             width={200}
                             height={300}
                             className='z-0'

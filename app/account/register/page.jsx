@@ -36,16 +36,13 @@ export default function Page() {
         const error = document.querySelector('#error')
         error.innerHTML = ''
 
-        const res = await fetch(
-            `https://epicode-belcastro-capstone-project.onrender.com/users/register`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(User),
-            }
-        )
+        const res = await fetch(`${process.env.ENDPOINT}/users/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(User),
+        })
         if (res.ok) {
             router.push('/account/login')
             setLoading(false)

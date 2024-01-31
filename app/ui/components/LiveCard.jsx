@@ -29,7 +29,7 @@ export default function LiveCard({ teams, goals, fixture, league }) {
                     </div>
                     <div className='col-span-4 flex flex-col items-center justify-between gap-2 overflow-hidden text-center'>
                         <p className='text-sm font-bold text-gray-500'>
-                            {fixture.status.elapsed}'
+                            {fixture.status.elapsed}&rsquo;
                         </p>
                         <p className='text-sm font-bold text-gray-500'>
                             {fixture.status.long}

@@ -11,16 +11,13 @@ export default function Layout({ children }) {
     useEffect(() => {
         const getUser = async () => {
             try {
-                const res = await fetch(
-                    `https://epicode-belcastro-capstone-project.onrender.com/users/me`,
-                    {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                )
+                const res = await fetch(`${process.env.ENDPOINT}/users/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
 
                 if (res.ok) {
                     let data = await res.json()
@@ -35,7 +32,7 @@ export default function Layout({ children }) {
             }
         }
         getUser()
-    }, [])
+    }, [token])
 
     return (
         <UserContext.Provider value={userData}>
