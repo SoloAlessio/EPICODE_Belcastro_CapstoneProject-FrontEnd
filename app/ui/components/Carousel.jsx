@@ -3,7 +3,7 @@ import LiveCard from './LiveCard'
 
 export default function Carousel({ liveMatches }) {
     return (
-        <div className='mb-6 grid grid-cols-12 gap-4'>
+        <div className='z-10 mb-6 grid grid-cols-12 gap-4'>
             {liveMatches.slice(0, 6).map((el) => (
                 <LiveCard
                     teams={el.teams}

@@ -12,6 +12,27 @@ body {
     }
 }
 
+#liveDot {
+    background-color: #ff0000;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: redBip 1.5s infinite;
+}
+
+@keyframes redBip {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 @media (min-width: 640px) {
     ::-webkit-scrollbar {
         width: 8px;
@@ -32,4 +53,56 @@ body {
     ::-webkit-scrollbar-thumb:hover {
         background: #7e7e7e;
     }
+}
+
+#HomeTitle {
+    background: radial-gradient(
+        circle at 100%,
+        #001731,
+        #004493 50%,
+        #006fee 75%,
+        #001731 100%
+    );
+    font-weight: 600;
+    background-size: 200% auto;
+    color: #000;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: animatedTextGradient 3s linear infinite;
+}
+
+@keyframes animatedTextGradient {
+    to {
+        background-position: 200% center;
+    }
+}
+
+@keyframes animatedPattern {
+    0% {
+        background-position: center 200%;
+    }
+    100% {
+        background-position: center 0%;
+    }
+}
+
+.pattern {
+    background-color: transparent;
+    opacity: 1;
+    background-image: radial-gradient(#e4e4e7 2px, transparent 2px),
+        radial-gradient(#e4e4e7 2px, transparent 2px);
+    background-size: 80px 80px;
+    background-position:
+        0 0,
+        40px 40px;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 0;
+    animation: animatedPattern 120s linear infinite;
+}
+
+.dark .pattern {
+    background-image: radial-gradient(#18181b 2px, transparent 2px),
+        radial-gradient(#18181b 2px, transparent 2px);
 }

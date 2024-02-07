@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaPeopleGroup } from 'react-icons/fa6'
+import { FaPeopleGroup, FaLocationDot } from 'react-icons/fa6'
 import { Image } from '@nextui-org/react'
 
 export default function SquadDetail({ team, venue }) {
@@ -16,7 +16,8 @@ export default function SquadDetail({ team, venue }) {
                 <p className='mb-4 text-lg'>
                     {venue.name}
                     <br />
-                    <span className='text-base text-slate-500'>
+                    <span className='flex items-center gap-2 text-base text-slate-500'>
+                        <FaLocationDot />
                         {venue.address}, {venue.city}
                     </span>
                 </p>

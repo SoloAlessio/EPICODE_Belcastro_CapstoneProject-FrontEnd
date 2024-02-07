@@ -1,11 +1,22 @@
 'use client'
 
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, CardBody, ScrollShadow } from '@nextui-org/react'
+import {
+    Card,
+    CardBody,
+    ScrollShadow,
+    Table,
+    TableHeader,
+    TableColumn,
+    TableBody,
+    TableRow,
+    TableCell,
+    getKeyValue,
+    Divider,
+} from '@nextui-org/react'
 import Carousel from '../ui/components/Carousel'
 import Fixture from '../ui/components/Fixture'
 import SquadDetail from '../ui/components/SquadDetail'
-import PlayerCard from '../ui/components/PlayerCard'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { UserContext } from '../context/UserContext'
@@ -19,16 +30,14 @@ export default function Page() {
 
     const [liveMatches, setLiveMatches] = useState('')
     const [fixtures, setFixtures] = useState('')
+    const [standings, setStandings] = useState('')
     const [favTeam, setFavTeam] = useState('')
 
     const area = {
         series: [
             {
                 name: 'Squad Form',
-                data: [
-                    18, 22, 19, 20, 23, 25, 21, 24, 17, 26, 27, 16, 28, 29, 30,
-                    31, 32, 33, 34,
-                ],
+                data: [18, 22, 19, 20, 23, 25, 21, 24, 17, 26, 27, 16, 28],
             },
         ],
         options: {
@@ -55,21 +64,75 @@ export default function Page() {
                 '09/02/2024',
                 '16/02/2024',
                 '23/02/2024',
-                '01/03/2024',
-                '08/03/2024',
-                '15/03/2024',
-                '22/03/2024',
-                '29/03/2024',
-                '05/04/2024',
             ],
         },
     }
+
+    const columns = [
+        {
+            key: 'team',
+            label: 'TEAM',
+        },
+        {
+            key: 'Points',
+            label: 'Pt',
+        },
+        {
+            key: 'Games',
+            label: 'PG',
+        },
+    ]
+
+    const rows = [
+        {
+            key: '1',
+            name: 'Tony Reichert',
+            role: 'CEO',
+            status: 'Active',
+        },
+        {
+            key: '2',
+            name: 'Zoey Lang',
+            role: 'Technical Lead',
+            status: 'Paused',
+        },
+        {
+            key: '3',
+            name: 'Jane Fisher',
+            role: 'Senior Developer',
+            status: 'Active',
+        },
+        {
+            key: '4',
+            name: 'William Howard',
+            role: 'Community Manager',
+            status: 'Vacation',
+        },
+    ]
 
     useEffect(() => {
         const token = localStorage.getItem('token')
 
         if (!token) {
             router.push('/')
+        }
+
+        const getStandings = async () => {
+            let res = await fetch(
+                `https://v3.football.api-sports.io/standings?league=135&season=2023`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'x-apisports-key': 'cd11382c690043fa0c83658c45af681f',
+                    },
+                }
+            )
+            if (res.ok) {
+                let data = await res.json()
+                setStandings(data.response[0].league.standings[0])
+            } else {
+                throw new Error('Failed to fetch!')
+            }
         }
 
         const getFixtures = async () => {
@@ -126,20 +189,34 @@ export default function Page() {
             }
         }
 
+        getStandings()
         getFavTeam()
         getLiveMatches()
         getFixtures()
     }, [])
 
     return (
-        <div className='container px-4 md:mx-auto'>
+        <>
             {/* Carousel */}
-            {liveMatches && <Carousel liveMatches={liveMatches} />}
+            <h4 className='mb-4 flex items-center gap-2 text-xl font-bold'>
+                <div id='liveDot' />
+                Live Matches
+            </h4>
+
+            {liveMatches.length > 0 ? (
+                <Carousel liveMatches={liveMatches} />
+            ) : (
+                <p className='mb-8 text-sm text-default-500'>
+                    😔 Looks like Nobody is playing right now
+                </p>
+            )}
+
+            <Divider orientation='horizontal' className='my-6' />
 
             {/* Welcome text */}
             {userData && (
-                <h1 className='mb-6 text-center text-xl'>
-                    Welcome Back{' '}
+                <h1 className='mb-6 text-xl'>
+                    <span className='mr-2 font-light'>Welcome Back</span>
                     <span className='font-bold'>{userData.name}</span> 👋
                 </h1>
             )}
@@ -165,7 +242,7 @@ export default function Page() {
                                 <Link
                                     key={el.fixture.id}
                                     href={`/dashboard/match/${el.fixture.id}`}
-                                    className='hover:bg-default-100'
+                                    className='rounded transition-all hover:bg-default-100'
                                     color='foreground'
                                 >
                                     <Fixture
@@ -178,106 +255,28 @@ export default function Page() {
                     </CardBody>
                 </Card>
 
-                {/* Squad Best Players */}
-                <Card className='col-span-12 lg:col-span-4'>
-                    <ScrollShadow className='h-[400px] md:h-[650px]'>
-                        <CardBody className='p-4'>
-                            <p className='mb-4 font-bold'>Best Players</p>
-                            <p className='mb-4 font-semibold'>Goals</p>
-                            <div className='mb-4 flex flex-col gap-4'>
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                    image={
-                                        'https://api.sofascore.app/api/v1/player/823984/image'
-                                    }
-                                />
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                            </div>
-                            <p className='mb-4 font-semibold'>Assists</p>
-                            <div className='mb-4 flex flex-col gap-4'>
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                            </div>
-                            <p className='mb-4 font-semibold'>Goals</p>
-                            <div className='mb-4 flex flex-col gap-4'>
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                            </div>
-                            <p className='mb-4 font-semibold'>Goals</p>
-                            <div className='mb-4 flex flex-col gap-4'>
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                            </div>
-                            <p className='mb-4 font-semibold'>Goals</p>
-                            <div className='mb-4 flex flex-col gap-4'>
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                                <PlayerCard
-                                    player={'Lautaro Martinez'}
-                                    role={'Attaccante'}
-                                    number={'9'}
-                                />
-                            </div>
-                        </CardBody>
-                    </ScrollShadow>
+                {/* Squad Standing */}
+                <Card className='col-span-12 sm:col-span-4'>
+                    {/* <Table aria-label='Example table with dynamic content'>
+                        <TableHeader columns={columns}>
+                            {(column) => (
+                                <TableColumn key={column.key}>
+                                    {column.label}
+                                </TableColumn>
+                            )}
+                        </TableHeader>
+                        <TableBody items={rows}>
+                            {(item) => (
+                                <TableRow key={rows.key}>
+                                    {(columnKey) => (
+                                        <TableCell>
+                                            {getKeyValue(item, columnKey)}
+                                        </TableCell>
+                                    )}
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table> */}
                 </Card>
 
                 {/* Squad Form */}
@@ -293,6 +292,6 @@ export default function Page() {
                     </CardBody>
                 </Card>
             </div>
-        </div>
+        </>
     )
 }

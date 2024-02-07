@@ -4,7 +4,8 @@ import { useTheme } from 'next-themes'
 import { FaMoon, FaSun } from 'react-icons/fa6'
 
 const ThemeSwitcher = () => {
-    const [theme, setTheme] = useState('dark')
+    const actualTheme = useTheme()
+    const [theme, setTheme] = useState(actualTheme.theme)
     const { setTheme: setNextUITheme } = useTheme()
 
     const toggleTheme = () => {

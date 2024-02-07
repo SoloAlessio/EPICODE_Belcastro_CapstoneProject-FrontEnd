@@ -18,6 +18,7 @@ export default function Page() {
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
     const [password, setPassword] = useState('')
+    const [passwordConfirm, setPasswordConfirm] = useState('')
     const [isVisible, setIsVisible] = React.useState(false)
 
     const User = {
@@ -36,13 +37,25 @@ export default function Page() {
         const error = document.querySelector('#error')
         error.innerHTML = ''
 
-        const res = await fetch(`${process.env.ENDPOINT}/users/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(User),
-        })
+        if (password !== passwordConfirm) {
+            setLoading(false)
+            if (error.classList.contains('hidden')) {
+                error.classList.toggle('hidden')
+            }
+            error.innerHTML = 'Passwords do not match'
+            return
+        }
+
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_ENDPOINT}/users/register`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(User),
+            }
+        )
         if (res.ok) {
             router.push('/account/login')
             setLoading(false)
@@ -58,7 +71,7 @@ export default function Page() {
     return (
         <div className='container mx-auto'>
             <div className='flex h-screen flex-col items-center justify-center'>
-                <div className='w-full max-w-sm'>
+                <div className='z-10 w-full max-w-sm'>
                     {/* LOGIN FORM */}
                     <Link
                         className='mb-4 flex items-center gap-4 px-6 text-sm text-default-500'
@@ -69,10 +82,10 @@ export default function Page() {
                     </Link>
                     <form
                         onSubmit={(e) => handleRegister(e)}
-                        className='mx-4 mb-4 rounded-2xl bg-default-300 p-6 shadow-xl dark:bg-default-50'
+                        className='z-10 mx-4 mb-4 rounded-2xl border border-default-200 bg-white p-6 shadow-xl dark:bg-default-50'
                     >
                         {/* SOCCERSTATS */}
-                        <h1 className='mb-6 text-center text-2xl font-light'>
+                        <h1 className='mb-6 text-center text-2xl font-semibold'>
                             Soccer<span className='font-bold'>Stats</span>
                         </h1>
 
@@ -119,6 +132,25 @@ export default function Page() {
                                     value={password}
                                     onValueChange={setPassword}
                                 />
+                                <Input
+                                    label='Confirm Password'
+                                    endContent={
+                                        <button
+                                            className='focus:outline-none'
+                                            type='button'
+                                            onClick={toggleVisibility}
+                                        >
+                                            {isVisible ? (
+                                                <EyeSlashFilledIcon className='pointer-events-none text-2xl text-default-400' />
+                                            ) : (
+                                                <EyeFilledIcon className='pointer-events-none text-2xl text-default-400' />
+                                            )}
+                                        </button>
+                                    }
+                                    type={isVisible ? 'text' : 'password'}
+                                    value={passwordConfirm}
+                                    onValueChange={setPasswordConfirm}
+                                />
                             </div>
                         </div>
 
@@ -138,7 +170,7 @@ export default function Page() {
                             </Button>
                         </div>
                         <a
-                            className='mt-4 inline-block w-full text-center align-baseline text-tiny font-medium text-slate-300 transition-all hover:text-white'
+                            className='mt-4 inline-block w-full text-center align-baseline text-tiny font-medium transition-all hover:text-white'
                             href='/account/login'
                         >
                             already have an account? login

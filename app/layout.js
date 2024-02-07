@@ -13,6 +13,7 @@ export default function RootLayout({ children }) {
             <body
                 className={`bg-background text-foreground ${poppins.className}`}
             >
+                <div className='pattern'></div>
                 <Providers>{children}</Providers>
             </body>
         </html>

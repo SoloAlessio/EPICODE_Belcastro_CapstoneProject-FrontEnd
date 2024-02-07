@@ -35,13 +35,16 @@ export default function Page() {
         error.innerHTML = ''
 
         // fetch request
-        const res = await fetch(`${process.env.ENDPOINT}/users/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(User),
-        })
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_ENDPOINT}/users/login`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(User),
+            }
+        )
         if (res.ok) {
             const data = await res.json()
             console.log(data)
@@ -61,7 +64,7 @@ export default function Page() {
     return (
         <div className='container mx-auto'>
             <div className='flex h-screen flex-col items-center justify-center'>
-                <div className='w-full max-w-sm'>
+                <div className='z-10 w-full max-w-sm'>
                     {/* LOGIN FORM */}
                     <Link
                         className='mb-4 flex items-center gap-4 px-6 text-sm text-default-500'
@@ -73,10 +76,10 @@ export default function Page() {
 
                     <form
                         onSubmit={(e) => handleLogin(e)}
-                        className='mx-4 mb-4 rounded-2xl bg-default-300 p-6 shadow-xl dark:bg-default-50'
+                        className='mx-4 mb-4 rounded-2xl border border-default-200 bg-white p-6 shadow-xl dark:bg-default-50'
                     >
                         {/* SOCCERSTATS */}
-                        <h1 className='mb-6 text-center text-2xl font-light'>
+                        <h1 className='mb-6 text-center text-2xl font-semibold'>
                             Soccer<span className='font-bold'>Stats</span>
                         </h1>
 
@@ -130,7 +133,7 @@ export default function Page() {
                             >
                                 LOGIN
                             </Button>
-                            <Button className='focus:shadow-outline font-regular w-full rounded-lg bg-white py-2 text-sm text-slate-700 focus:outline-none'>
+                            <Button className='focus:shadow-outline font-regular w-full rounded-lg border border-default-200 bg-white py-2 text-sm text-slate-700 focus:outline-none'>
                                 <FaGoogle />
                                 <span className='ml-1'>login with Google</span>
                             </Button>
