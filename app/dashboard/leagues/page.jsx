@@ -54,7 +54,10 @@ export default function Page() {
                             .includes(search.toLowerCase())
                     )
                     .map((el) => (
-                        <Card className='col-span-12 py-4 transition-transform hover:-translate-y-2 md:col-span-4 lg:col-span-3'>
+                        <Card
+                            className='col-span-12 py-4 transition-transform hover:-translate-y-2 md:col-span-4 lg:col-span-3'
+                            key={el.league.id}
+                        >
                             <CardBody className='flex items-center gap-4 overflow-visible px-4 py-2 md:flex-row'>
                                 <Image
                                     alt='Card background'

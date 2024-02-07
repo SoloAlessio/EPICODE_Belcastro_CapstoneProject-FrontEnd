@@ -129,7 +129,9 @@ export default function Page() {
             )
             if (res.ok) {
                 let data = await res.json()
-                setStandings(data.response[0].league.standings[0])
+                if (data.response[0].length > 0) {
+                    setStandings(data.response[0].league.standings[0])
+                }
             } else {
                 throw new Error('Failed to fetch!')
             }
