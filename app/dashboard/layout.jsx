@@ -40,7 +40,7 @@ export default function Layout({ children }) {
 
     return (
         <UserContext.Provider value={userData}>
-            <NavBarComponent />
+            <NavBarComponent setUserData={setUserData} />
             <div className='container px-4 md:mx-auto'>
                 {children}
                 <Footer />

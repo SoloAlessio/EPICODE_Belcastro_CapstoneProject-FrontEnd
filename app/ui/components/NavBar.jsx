@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 
 import {
     Navbar,
@@ -22,6 +22,7 @@ import {
     Image,
     Button,
     Input,
+    Tooltip,
 } from '@nextui-org/react'
 
 import {
@@ -29,24 +30,124 @@ import {
     FaTrophy,
     FaCircleInfo,
     FaArrowRightFromBracket,
+    FaTrash,
 } from 'react-icons/fa6'
 
 import { useRouter } from 'next/navigation'
 import ThemeSwitcher from './ThemeSwitcher.jsx'
 import { UserContext } from '../../context/UserContext.jsx'
 
-export default function NavBarComponent() {
+export default function NavBarComponent({ setUserData }) {
     const userData = useContext(UserContext)
     const route = useRouter()
+
+    const [name, setName] = useState(userData?.name)
+    const [surname, setSurname] = useState(userData?.surname)
+    const [email, setEmail] = useState(userData?.email)
+
+    const [isLoading, setIsLoading] = useState(false)
+
     const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
+    /* LOGOUT */
     const handleLogout = () => {
         localStorage.removeItem('token')
         route.push('/')
     }
 
+    /* UPDATE USER DATA */
+    const updateUser = async () => {
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_ENDPOINT}/users/me`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                }
+            )
+
+            if (res.ok) {
+                let data = await res.json()
+                setUserData(data)
+            }
+        } catch (error) {
+            console.table({
+                status: error.status,
+                error: error.statusText,
+            })
+            throw new Error(error)
+        }
+    }
+
+    /* SET NEW USER DATA */
+    const handleSettings = async () => {
+        setIsLoading(true)
+        const errorMessage = document.querySelector('#error')
+        try {
+            let res = await fetch(
+                `${process.env.NEXT_PUBLIC_ENDPOINT}/users/me`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        surname: surname,
+                        email: email,
+                    }),
+                }
+            )
+
+            if (res.ok) {
+                updateUser()
+                setIsLoading(false)
+                onOpenChange()
+            } else {
+                setIsLoading(false)
+                errorMessage.innerHTML = 'Error updating settings'
+            }
+        } catch (error) {
+            setIsLoading(false)
+            errorMessage.innerHTML = error.message
+        }
+    }
+
+    /* DELETE USER */
+    const handleDelete = async () => {
+        const errorMessage = document.querySelector('#error')
+        if (!confirm('Are you sure you want to delete your account?')) {
+            return
+        }
+        try {
+            let res = await fetch(
+                `${process.env.NEXT_PUBLIC_ENDPOINT}/users/me`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                }
+            )
+
+            if (res.ok) {
+                handleLogout()
+            } else {
+                errorMessage.innerHTML = 'Error deleting account'
+            }
+        } catch (error) {
+            errorMessage.innerHTML = error.message
+        }
+    }
+
     return (
         <>
+            {/* NAVABAR */}
             <Navbar
                 isBordered
                 className='mb-6 [&_header]:container [&_header]:px-4'
@@ -120,7 +221,10 @@ export default function NavBarComponent() {
                                         isBordered
                                         className='mr-2 transition-transform'
                                         color='primary'
-                                        name={userData?.name}
+                                        name={`
+                                            ${userData?.name} 
+                                            ${userData?.surname}
+                                        `}
                                         size='sm'
                                         src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
                                     />
@@ -178,6 +282,7 @@ export default function NavBarComponent() {
                 </NavbarContent>
             </Navbar>
 
+            {/* SETTINGS MODAL */}
             <Modal
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -190,27 +295,65 @@ export default function NavBarComponent() {
                             <ModalHeader className='flex items-center gap-4'>
                                 <FaGear />
                                 <span>Settings</span>
+                                <p
+                                    id='error'
+                                    className='text-sm text-danger'
+                                ></p>
                             </ModalHeader>
                             <ModalBody>
                                 <div className='flex flex-col gap-2'>
-                                    <Input value={userData.name} label='Name' />
+                                    <div className='flex gap-2'>
+                                        <Input
+                                            isRequired
+                                            defaultValue={userData?.name}
+                                            onValueChange={setName}
+                                            label='Name'
+                                            type='text'
+                                        />
+                                        <Input
+                                            isRequired
+                                            defaultValue={userData?.surname}
+                                            onValueChange={setSurname}
+                                            label='Surname'
+                                            type='text'
+                                        />
+                                    </div>
                                     <Input
-                                        value={userData.email}
+                                        isRequired
+                                        defaultValue={userData?.email}
+                                        onValueChange={setEmail}
                                         label='Email'
+                                        type='email'
                                     />
                                 </div>
                             </ModalBody>
-                            <ModalFooter>
-                                <Button
-                                    color='danger'
-                                    variant='flat'
-                                    onPress={onClose}
-                                >
-                                    Close
-                                </Button>
-                                <Button color='primary' onPress={onClose}>
-                                    Save
-                                </Button>
+                            <ModalFooter className='justify-between'>
+                                <Tooltip content='Delete Acccount'>
+                                    <Button
+                                        isIconOnly
+                                        color='danger'
+                                        variant='shadow'
+                                        onClick={() => handleDelete()}
+                                    >
+                                        <FaTrash />
+                                    </Button>
+                                </Tooltip>
+                                <div className='flex gap-4'>
+                                    <Button
+                                        color='danger'
+                                        variant='flat'
+                                        onPress={onClose}
+                                    >
+                                        Close
+                                    </Button>
+                                    <Button
+                                        color='primary'
+                                        isLoading={isLoading}
+                                        onPress={() => handleSettings()}
+                                    >
+                                        Save
+                                    </Button>
+                                </div>
                             </ModalFooter>
                         </>
                     )}

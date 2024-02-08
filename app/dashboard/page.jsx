@@ -4,14 +4,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import {
     Card,
     CardBody,
-    ScrollShadow,
+    Avatar,
     Table,
     TableHeader,
     TableColumn,
     TableBody,
     TableRow,
     TableCell,
-    getKeyValue,
     Divider,
 } from '@nextui-org/react'
 import Carousel from '../ui/components/Carousel'
@@ -70,6 +69,10 @@ export default function Page() {
 
     const columns = [
         {
+            key: 'RANK',
+            label: '#',
+        },
+        {
             key: 'team',
             label: 'TEAM',
         },
@@ -80,33 +83,6 @@ export default function Page() {
         {
             key: 'Games',
             label: 'PG',
-        },
-    ]
-
-    const rows = [
-        {
-            key: '1',
-            name: 'Tony Reichert',
-            role: 'CEO',
-            status: 'Active',
-        },
-        {
-            key: '2',
-            name: 'Zoey Lang',
-            role: 'Technical Lead',
-            status: 'Paused',
-        },
-        {
-            key: '3',
-            name: 'Jane Fisher',
-            role: 'Senior Developer',
-            status: 'Active',
-        },
-        {
-            key: '4',
-            name: 'William Howard',
-            role: 'Community Manager',
-            status: 'Vacation',
         },
     ]
 
@@ -129,8 +105,11 @@ export default function Page() {
             )
             if (res.ok) {
                 let data = await res.json()
-                if (data.response[0].length > 0) {
-                    setStandings(data.response[0].league.standings[0])
+                if (data.response.length > 0) {
+                    data = data.response[0].league.standings[0]
+                    setStandings(data)
+                } else {
+                    setStandings(data.response)
                 }
             } else {
                 throw new Error('Failed to fetch!')
@@ -200,7 +179,7 @@ export default function Page() {
     return (
         <>
             {/* Carousel */}
-            <h4 className='mb-4 flex items-center gap-2 text-xl font-bold'>
+            <h4 className='z-10 mb-4 flex items-center gap-2 text-xl font-bold'>
                 <div id='liveDot' />
                 Live Matches
             </h4>
@@ -208,7 +187,7 @@ export default function Page() {
             {liveMatches.length > 0 ? (
                 <Carousel liveMatches={liveMatches} />
             ) : (
-                <p className='mb-8 text-sm text-default-500'>
+                <p className='z-10 mb-8 text-sm text-default-500'>
                     😔 Looks like Nobody is playing right now
                 </p>
             )}
@@ -217,7 +196,7 @@ export default function Page() {
 
             {/* Welcome text */}
             {userData && (
-                <h1 className='mb-6 text-xl'>
+                <h1 className='z-10 mb-6 text-xl'>
                     <span className='mr-2 font-light'>Welcome Back</span>
                     <span className='font-bold'>{userData.name}</span> 👋
                 </h1>
@@ -259,26 +238,39 @@ export default function Page() {
 
                 {/* Squad Standing */}
                 <Card className='col-span-12 sm:col-span-4'>
-                    {/* <Table aria-label='Example table with dynamic content'>
-                        <TableHeader columns={columns}>
-                            {(column) => (
-                                <TableColumn key={column.key}>
-                                    {column.label}
-                                </TableColumn>
-                            )}
-                        </TableHeader>
-                        <TableBody items={rows}>
-                            {(item) => (
-                                <TableRow key={rows.key}>
-                                    {(columnKey) => (
+                    {standings && (
+                        <Table
+                            aria-label='Example table with dynamic content'
+                            isHeaderSticky
+                            className='h-[550px] overflow-y-auto'
+                        >
+                            <TableHeader columns={columns}>
+                                {(column) => (
+                                    <TableColumn key={column.key}>
+                                        {column.label}
+                                    </TableColumn>
+                                )}
+                            </TableHeader>
+                            <TableBody>
+                                {standings.map((row) => (
+                                    <TableRow key={row.team.id}>
+                                        <TableCell>{row.rank}</TableCell>
                                         <TableCell>
-                                            {getKeyValue(item, columnKey)}
+                                            <div className='flex items-center gap-4'>
+                                                <Avatar
+                                                    src={row.team.logo}
+                                                    className='h-6 w-6 rounded-none bg-transparent'
+                                                />
+                                                <span>{row.team.name}</span>
+                                            </div>
                                         </TableCell>
-                                    )}
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table> */}
+                                        <TableCell>{row.points}</TableCell>
+                                        <TableCell>{row.all.played}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    )}
                 </Card>
 
                 {/* Squad Form */}
