@@ -35,7 +35,7 @@ body {
 
 @media (min-width: 640px) {
     ::-webkit-scrollbar {
-        width: 8px;
+        width: 4px;
     }
 
     /* Track */
@@ -45,13 +45,13 @@ body {
 
     /* Handle */
     ::-webkit-scrollbar-thumb {
-        background: #cecece;
-        border-radius: 0.5rem;
+        background: #7e7e7e;
+        border-radius: 8px;
     }
 
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-        background: #7e7e7e;
+        background: #71717a;
     }
 }
 

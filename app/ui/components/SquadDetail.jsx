@@ -12,8 +12,8 @@ export default function SquadDetail({ team, venue }) {
                 loading='lazy'
             />
             <div className='text-center lg:text-start'>
-                <h4 className='mb-4 text-3xl font-semibold'>{team.name}</h4>
-                <p className='mb-4 text-lg'>
+                <h4 className='mb-6 text-3xl font-semibold'>{team.name}</h4>
+                <p className='mb-6 text-lg'>
                     {venue.name}
                     <br />
                     <span className='flex items-center gap-2 text-base text-slate-500'>
@@ -21,10 +21,13 @@ export default function SquadDetail({ team, venue }) {
                         {venue.address}, {venue.city}
                     </span>
                 </p>
-                <p className='flex items-center justify-center gap-4 text-lg lg:justify-start'>
-                    <FaPeopleGroup className='text-indigo-500' />{' '}
-                    {venue.capacity}
-                </p>
+                <div className='flex flex-col justify-center text-lg lg:justify-start'>
+                    Capacità:
+                    <div className='flex items-center justify-center gap-4 text-slate-500 lg:justify-start'>
+                        <FaPeopleGroup />
+                        <span>{venue.capacity}</span>
+                    </div>
+                </div>
             </div>
         </div>
     )

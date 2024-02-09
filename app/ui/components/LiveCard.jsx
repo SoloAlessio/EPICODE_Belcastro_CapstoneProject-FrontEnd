@@ -3,9 +3,9 @@ import { Card, CardBody, Image, Link } from '@nextui-org/react'
 
 export default function LiveCard({ teams, goals, fixture, league }) {
     return (
-        <Card className='col-span-12 md:col-span-4 lg:col-span-2'>
+        <Card className='col-span-12 md:col-span-4 xl:col-span-2'>
             <Link href={`/dashboard/match/${fixture.id}`} color='foreground'>
-                <CardBody className='grid grid-cols-12 gap-4'>
+                <CardBody className='grid grid-cols-12 gap-4 overflow-x-hidden'>
                     {/* LEAGUE NAME */}
                     <div className='col-span-12'>
                         <p className='text-sm font-bold text-gray-500'>

@@ -31,12 +31,35 @@ export default function Page() {
     const [fixtures, setFixtures] = useState('')
     const [standings, setStandings] = useState('')
     const [favTeam, setFavTeam] = useState('')
+    const [teamForm, setTeamForm] = useState([])
+
+    let totalScore = 0
+    let formattedTeamForm = teamForm.map((el) => {
+        switch (el) {
+            case 'W':
+                totalScore += 3
+                break
+
+            case 'L':
+                totalScore -= 2
+                break
+
+            case 'D':
+                totalScore += 1
+                break
+
+            default:
+                break
+        }
+
+        return totalScore
+    })
 
     const area = {
         series: [
             {
                 name: 'Squad Form',
-                data: [18, 22, 19, 20, 23, 25, 21, 24, 17, 26, 27, 16, 28],
+                data: formattedTeamForm,
             },
         ],
         options: {
@@ -49,21 +72,6 @@ export default function Page() {
                     opacityTo: 0.2,
                 },
             },
-            labels: [
-                '17/12/2023',
-                '20/12/2023',
-                '23/12/2023',
-                '29/12/2023',
-                '06/01/2024',
-                '13/01/2024',
-                '19/01/2024',
-                '22/01/2024',
-                '28/01/2024',
-                '02/02/2024',
-                '09/02/2024',
-                '16/02/2024',
-                '23/02/2024',
-            ],
         },
     }
 
@@ -170,10 +178,29 @@ export default function Page() {
             }
         }
 
+        const getTeamForm = async () => {
+            let res = await fetch(
+                `https://v3.football.api-sports.io/teams/statistics?season=2023&team=505&league=135`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'x-apisports-key': 'cd11382c690043fa0c83658c45af681f',
+                    },
+                }
+            )
+            if (res.ok) {
+                let data = await res.json()
+                setTeamForm(data.response.form.split(''))
+            } else {
+                throw new Error('Failed to fetch!')
+            }
+        }
+
         getStandings()
         getFavTeam()
         getLiveMatches()
         getFixtures()
+        getTeamForm()
     }, [])
 
     return (
@@ -217,7 +244,7 @@ export default function Page() {
 
                 {/* Squad Fixtures */}
                 <Card className='col-span-12 sm:col-span-6'>
-                    <CardBody className='p-4'>
+                    <CardBody className='flex flex-col justify-between p-4'>
                         {fixtures &&
                             fixtures.map((el) => (
                                 <Link
@@ -237,12 +264,12 @@ export default function Page() {
                 </Card>
 
                 {/* Squad Standing */}
-                <Card className='col-span-12 sm:col-span-4'>
+                <Card className='col-span-12 lg:col-span-4'>
                     {standings && (
                         <Table
                             aria-label='Example table with dynamic content'
                             isHeaderSticky
-                            className='h-[550px] overflow-y-auto'
+                            className='h-[550px] overflow-y-auto lg:h-[650px]'
                         >
                             <TableHeader columns={columns}>
                                 {(column) => (
@@ -274,7 +301,7 @@ export default function Page() {
                 </Card>
 
                 {/* Squad Form */}
-                <Card className='col-span-12 hidden sm:col-span-8 lg:flex'>
+                <Card className='col-span-12 hidden sm:col-span-6 lg:col-span-8 lg:flex'>
                     <CardBody>
                         {typeof window !== 'undefined' && (
                             <Chart

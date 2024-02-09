@@ -9,7 +9,6 @@ export default function Layout({ children }) {
     const [userData, setUserData] = useState()
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
         const getUser = async () => {
             try {
                 const res = await fetch(
@@ -18,7 +17,7 @@ export default function Layout({ children }) {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
                         },
                     }
                 )

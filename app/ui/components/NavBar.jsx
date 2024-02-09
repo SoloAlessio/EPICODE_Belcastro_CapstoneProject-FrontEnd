@@ -181,13 +181,12 @@ export default function NavBarComponent({ setUserData }) {
                             </Link>
                         </NavbarItem>
                         <NavbarItem>
-                            <Link href='/dashboard/leagues' color='foreground'>
-                                Leagues
-                            </Link>
-                        </NavbarItem>
-                        <NavbarItem>
-                            <Link color='foreground' href='#'>
-                                Clubs
+                            <Link
+                                color='foreground'
+                                href='/dashboard/about'
+                                aria-current='page'
+                            >
+                                About The Dev
                             </Link>
                         </NavbarItem>
                     </NavbarContent>
@@ -222,7 +221,7 @@ export default function NavBarComponent({ setUserData }) {
                                         className='mr-2 transition-transform'
                                         color='primary'
                                         name={`
-                                            ${userData?.name} 
+                                            ${userData?.name}  
                                             ${userData?.surname}
                                         `}
                                         size='sm'
@@ -300,7 +299,7 @@ export default function NavBarComponent({ setUserData }) {
                                     className='text-sm text-danger'
                                 ></p>
                             </ModalHeader>
-                            <ModalBody>
+                            <ModalBody className='py-6'>
                                 <div className='flex flex-col gap-2'>
                                     <div className='flex gap-2'>
                                         <Input
