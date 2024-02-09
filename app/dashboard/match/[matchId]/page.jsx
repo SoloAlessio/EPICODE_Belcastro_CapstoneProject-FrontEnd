@@ -1,13 +1,7 @@
 'use client'
 
 import React from 'react'
-import {
-    Image,
-    Card,
-    CardBody,
-    Progress,
-    ScrollShadow,
-} from '@nextui-org/react'
+import { Image, Card, CardBody, ScrollShadow } from '@nextui-org/react'
 import {
     TbScreenShare,
     TbBallFootball,

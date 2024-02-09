@@ -4,8 +4,6 @@ import { Image } from '@nextui-org/react'
 export default function Fixture({ fixture, teams, goals }) {
     const formatDate = (date) => {
         let formattedDate = date.toString().slice(0, 10)
-        formattedDate = formattedDate.replace('T', ' - ')
-
         return formattedDate
     }
 

@@ -32,12 +32,28 @@ export default function Footer() {
                                         SoccerStats
                                     </a>
                                 </li>
-                                <li>
+                                <li className='mb-4'>
                                     <a
                                         href='https://tailwindcss.com/'
                                         className='hover:underline'
                                     >
                                         Tailwind CSS
+                                    </a>
+                                </li>
+                                <li className='mb-4'>
+                                    <a
+                                        href='https://nextui.org/'
+                                        className='hover:underline'
+                                    >
+                                        Next UI
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href='https://nextjs.org/'
+                                        className='hover:underline'
+                                    >
+                                        Next JS
                                     </a>
                                 </li>
                             </ul>
@@ -99,7 +115,7 @@ export default function Footer() {
                     <div className='z-10 mt-4 flex sm:mt-0 sm:justify-center'>
                         {/* Facebook */}
                         <a
-                            href='#'
+                            href='https://www.facebook.com/'
                             className='text-gray-500 hover:text-gray-900 dark:hover:text-white'
                         >
                             <svg
@@ -120,7 +136,7 @@ export default function Footer() {
 
                         {/* Discord */}
                         <a
-                            href='#'
+                            href='https://www.discord.com/'
                             className='ms-5 text-gray-500 hover:text-gray-900 dark:hover:text-white'
                         >
                             <svg
@@ -137,7 +153,7 @@ export default function Footer() {
 
                         {/* Twitter */}
                         <a
-                            href='#'
+                            href='https://www.twitter.com/'
                             className='ms-5 text-gray-500 hover:text-gray-900 dark:hover:text-white'
                         >
                             <svg
@@ -158,7 +174,7 @@ export default function Footer() {
 
                         {/* GitHub */}
                         <a
-                            href='#'
+                            href='https://www.github.com/'
                             className='ms-5 text-gray-500 hover:text-gray-900 dark:hover:text-white'
                         >
                             <svg
@@ -179,7 +195,7 @@ export default function Footer() {
 
                         {/* Dribble */}
                         <a
-                            href='#'
+                            href='https://www.dribbble.com/'
                             className='ms-5 text-gray-500 hover:text-gray-900 dark:hover:text-white'
                         >
                             <svg

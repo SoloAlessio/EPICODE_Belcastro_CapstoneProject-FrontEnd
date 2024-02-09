@@ -2,16 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    min-height: 100vh;
-}
-
 @layer utilities {
     .text-balance {
         text-wrap: balance;
     }
 }
 
+body {
+    min-height: 100vh;
+}
+
+/* Animated liveMatches red light */
 #liveDot {
     background-color: #ff0000;
     width: 12px;
@@ -33,28 +34,7 @@ body {
     }
 }
 
-@media (min-width: 640px) {
-    ::-webkit-scrollbar {
-        width: 4px;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #7e7e7e;
-        border-radius: 8px;
-    }
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #71717a;
-    }
-}
-
+/* Animated HomePage Title */
 #HomeTitle {
     background: radial-gradient(
         circle at 100%,
@@ -77,15 +57,7 @@ body {
     }
 }
 
-@keyframes animatedPattern {
-    0% {
-        background-position: center 200%;
-    }
-    100% {
-        background-position: center 0%;
-    }
-}
-
+/* Animated pattern */
 .pattern {
     background-color: transparent;
     opacity: 1;
@@ -105,4 +77,36 @@ body {
 .dark .pattern {
     background-image: radial-gradient(#18181b 2px, transparent 2px),
         radial-gradient(#18181b 2px, transparent 2px);
+}
+
+@keyframes animatedPattern {
+    0% {
+        background-position: center 200%;
+    }
+    100% {
+        background-position: center 0%;
+    }
+}
+
+/* Custom Scrollbar */
+@media (min-width: 640px) {
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #7e7e7e;
+        border-radius: 8px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #71717a;
+    }
 }

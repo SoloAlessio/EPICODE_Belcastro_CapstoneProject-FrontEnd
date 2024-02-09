@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## SoccerStats
 
-## Getting Started
+SoccerStats is a web application dedicated to football enthusiasts, designed to provide an informative and interactive experience.
+With an intuitive and functional interface, the site offers a wide range of detailed information about teams, matches, and related statistics.
 
-First, run the development server:
+### Key Features:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+-   Captivating Home Page: The home page welcomes users with a modern and accessible interface, offering options for login and registration to access advanced features.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-   Customized Dashboard: Once logged in, users are directed to a personalized dashboard where they can view detailed information about their favorite team. The dashboard includes the latest 5 matches played, the current standings, and a graphical representation of the team's form.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+-   Match Details: Users can access a dedicated page for each match, where they find all relevant information and detailed statistics of the match, including results, scorers, key events, and more.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### How to Use:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-   Clone this repository to your computer.
+-   Make sure you have a Node.js environment set up.
+-   Run `npm install` to install dependencies.
+    Start the local server using `npm run dev`.
+-   Visit http://localhost:3000 in your browser to access the site.
