@@ -6,12 +6,8 @@ import confetti from 'canvas-confetti'
 import Link from 'next/link'
 
 export default function Page() {
-    let scalar = 2
-    let pineapple = confetti.shapeFromText({ text: '❤️', scalar })
-
     const handleConfetti = () => {
         confetti({
-            shapes: [pineapple],
             particleCount: 150,
             spread: 70,
         })
@@ -34,8 +30,9 @@ export default function Page() {
             </Button>
             <div className='mt-6 hidden' id='reward'>
                 <p className='mb-4 text-center font-light text-secondary-500'>
-                    You seriously taught there was a reward!? <br /> Hurry up
-                    now, run before you get caught!
+                    🤨
+                    <br /> You seriously tought there was a reward!? <br />{' '}
+                    Hurry up now, run before you get caught!
                 </p>
                 <Link href={`/dashboard`}>
                     <Button
