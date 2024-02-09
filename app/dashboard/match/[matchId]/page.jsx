@@ -201,6 +201,7 @@ export default function Page({ params }) {
                         <ScrollShadow className='h-[350px] px-4'>
                             {homeStats.map((element, index) => (
                                 <StatsBar
+                                    key={homeStats[index].type}
                                     homeValue={homeStats[index].value}
                                     awayValue={awayStats[index].value}
                                     statName={homeStats[index].type}
