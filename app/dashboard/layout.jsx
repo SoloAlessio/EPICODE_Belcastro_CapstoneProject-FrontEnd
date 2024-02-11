@@ -4,11 +4,17 @@ import NavBarComponent from '../ui/components/NavBar.jsx'
 import { useEffect, useState } from 'react'
 import { UserContext } from '../context/UserContext.jsx'
 import Footer from '../ui/components/Footer.jsx'
+import { useSearchParams } from 'next/navigation.js'
 
 export default function Layout({ children }) {
     const [userData, setUserData] = useState()
+    const searchParams = useSearchParams()
+    const urlToken = searchParams.get(`token`)
 
     useEffect(() => {
+        if (urlToken) {
+            localStorage.setItem(`token`, urlToken)
+        }
         const getUser = async () => {
             try {
                 const res = await fetch(
