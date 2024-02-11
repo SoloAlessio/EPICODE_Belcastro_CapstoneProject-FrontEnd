@@ -4,7 +4,6 @@ import NavBarComponent from '../ui/components/NavBar.jsx'
 import { useEffect, useState } from 'react'
 import { UserContext } from '../context/UserContext.jsx'
 import Footer from '../ui/components/Footer.jsx'
-import UrlToken from '../ui/components/UrlToken.jsx'
 
 export default function Layout({ children }) {
     const [userData, setUserData] = useState()
@@ -40,7 +39,6 @@ export default function Layout({ children }) {
 
     return (
         <UserContext.Provider value={userData}>
-            <UrlToken />
             <NavBarComponent setUserData={setUserData} />
             <div className='container px-4 md:mx-auto'>
                 {children}
