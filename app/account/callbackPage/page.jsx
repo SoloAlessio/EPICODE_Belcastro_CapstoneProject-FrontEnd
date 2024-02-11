@@ -9,6 +9,7 @@ export default function Page() {
     useEffect(() => {
         const { token } = router.query
         if (token) {
+            console.log(token)
             localStorage.setItem(`token`, token)
             router.push(`/dashboard`)
         } else {
