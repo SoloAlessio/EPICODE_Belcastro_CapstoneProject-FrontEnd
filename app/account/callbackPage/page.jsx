@@ -17,4 +17,6 @@ export default function Page() {
             router.push(`/`)
         }
     }, [router.query])
+
+    return <div>{localStorage.getItem(`token`) || `No Token`}</div>
 }
