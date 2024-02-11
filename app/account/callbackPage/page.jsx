@@ -18,5 +18,11 @@ export default function Page() {
         }
     }, [router.query])
 
-    return <div>{localStorage.getItem(`token`) || `No Token`}</div>
+    return (
+        <div className='flex h-[700px] items-center justify-center'>
+            <h1 className='text-center font-semibold text-default-500'>
+                Loading...
+            </h1>
+        </div>
+    )
 }
