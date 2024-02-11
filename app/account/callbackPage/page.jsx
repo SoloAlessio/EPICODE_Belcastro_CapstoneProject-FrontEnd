@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation'
 
 export default function Page() {
     const router = useRouter()
+    let url
 
     useEffect(() => {
-        let url = window.location.href
+        url = window.location.href
         console.log(url)
         const index = url.indexOf(`=`)
 
