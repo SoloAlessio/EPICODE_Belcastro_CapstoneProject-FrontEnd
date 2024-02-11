@@ -12,7 +12,7 @@ export default function Page() {
         console.log(url)
         const index = url.indexOf(`=`)
 
-        const token = url.substring(index)
+        const token = url.substring(index + 1)
 
         if (token) {
             localStorage.setItem(`token`, token)
