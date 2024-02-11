@@ -4,7 +4,7 @@ import NavBarComponent from '../ui/components/NavBar.jsx'
 import { useEffect, useState } from 'react'
 import { UserContext } from '../context/UserContext.jsx'
 import Footer from '../ui/components/Footer.jsx'
-import { useSearchParams } from 'next/navigation.js'
+import { useSearchParams } from 'next/navigation'
 
 export default function Layout({ children }) {
     const [userData, setUserData] = useState()
