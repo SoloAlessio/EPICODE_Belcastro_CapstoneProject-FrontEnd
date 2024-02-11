@@ -133,7 +133,14 @@ export default function Page() {
                             >
                                 LOGIN
                             </Button>
-                            <Button className='focus:shadow-outline font-regular w-full rounded-lg border border-default-200 bg-white py-2 text-sm text-slate-700 focus:outline-none'>
+                            <Button
+                                onClick={() => {
+                                    window.location.assign(
+                                        `${process.env.NEXT_PUBLIC_ENDPOINT}/users/login/oauth-google`
+                                    )
+                                }}
+                                className='focus:shadow-outline font-regular w-full rounded-lg border border-default-200 bg-white py-2 text-sm text-slate-700 focus:outline-none'
+                            >
                                 <FaGoogle />
                                 <span className='ml-1'>login with Google</span>
                             </Button>
