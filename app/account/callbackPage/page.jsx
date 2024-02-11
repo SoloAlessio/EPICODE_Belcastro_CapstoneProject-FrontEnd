@@ -7,8 +7,9 @@ export default function Page() {
     const router = useRouter()
 
     useEffect(() => {
-        const url = window.location.href
-        const index = url.indexOf(`?`)
+        let url = window.location.href
+        console.log(url)
+        const index = url.indexOf(`=`)
 
         const token = url.substring(index)
 
