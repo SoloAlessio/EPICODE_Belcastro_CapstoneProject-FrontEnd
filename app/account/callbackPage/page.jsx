@@ -7,7 +7,7 @@ export default function Page() {
     const router = useRouter()
 
     useEffect(() => {
-        const { token } = router.query
+        const token = router.query.token ?? ''
         if (token) {
             console.log(token)
             localStorage.setItem(`token`, token)
