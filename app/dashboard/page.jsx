@@ -26,6 +26,8 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 export default function Page() {
     const router = useRouter()
     const userData = useContext(UserContext)
+    let year = new Date()
+    year = year.getFullYear()
 
     const [liveMatches, setLiveMatches] = useState('')
     const [fixtures, setFixtures] = useState('')
@@ -103,7 +105,7 @@ export default function Page() {
 
         const getStandings = async () => {
             let res = await fetch(
-                `https://v3.football.api-sports.io/standings?league=135&season=2023`,
+                `https://v3.football.api-sports.io/standings?league=135&season=${year}`,
                 {
                     method: 'GET',
                     headers: {
@@ -126,7 +128,7 @@ export default function Page() {
 
         const getFixtures = async () => {
             let res = await fetch(
-                `https://v3.football.api-sports.io/fixtures?season=2023&team=505&season=2023&last=5`,
+                `https://v3.football.api-sports.io/fixtures?season=${year}&team=505&season=${year}&last=5`,
                 {
                     method: 'GET',
                     headers: {
@@ -162,7 +164,7 @@ export default function Page() {
 
         const getFavTeam = async () => {
             let res = await fetch(
-                `https://v3.football.api-sports.io/teams?id=505&league=135&season=2023`,
+                `https://v3.football.api-sports.io/teams?id=505&league=135&season=${year}`,
                 {
                     method: 'GET',
                     headers: {
@@ -180,7 +182,7 @@ export default function Page() {
 
         const getTeamForm = async () => {
             let res = await fetch(
-                `https://v3.football.api-sports.io/teams/statistics?season=2023&team=505&league=135`,
+                `https://v3.football.api-sports.io/teams/statistics?season=${year}&team=505&league=135`,
                 {
                     method: 'GET',
                     headers: {
