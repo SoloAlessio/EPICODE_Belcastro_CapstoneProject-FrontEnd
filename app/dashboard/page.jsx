@@ -43,7 +43,7 @@ export default function Page() {
                 break
 
             case 'L':
-                totalScore -= 2
+                totalScore -= 0
                 break
 
             case 'D':
