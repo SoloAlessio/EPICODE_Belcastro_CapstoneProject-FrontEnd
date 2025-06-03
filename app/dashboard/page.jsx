@@ -27,7 +27,7 @@ export default function Page() {
     const router = useRouter()
     const userData = useContext(UserContext)
     let year = new Date()
-    year = year.getFullYear()
+    year = year.getFullYear() - 1
 
     const [liveMatches, setLiveMatches] = useState('')
     const [fixtures, setFixtures] = useState('')
